@@ -1,0 +1,5 @@
+download folder location: 
+C:\Users\NAPS0707\Downloads\
+
+destination folder: 
+C:\Users\NAPS0707\Desktop\Projects\Stockrow_Equity_Valuator\data

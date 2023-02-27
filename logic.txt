@@ -1,0 +1,6 @@
+Income Tax Provision =  income tax percent.
+if income text provision is negative, then this tax rate = 0%  
+
+total debt =Long Term Debt (Total) + Current Part of Debt
+
+dividends = dividend paid (CF) / shares 

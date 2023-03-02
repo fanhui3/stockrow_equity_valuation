@@ -99,8 +99,19 @@ def get_data():
         ) * -1
     except KeyError:
         df["dividend_per_share"] = 0
+
+    # dividend payout ratio share
+    try:
+        df["payout_ratio"] = (
+            df["Dividends_Paid_(Total)"] / df["Net_Income_Common"]
+        ) * -1
+    except KeyError:
+        df["payout_ratio"] = 0
+    df["payout_ratio"] = df["payout_ratio"].round(2)
+
     return df
 
 
 if __name__ == "__main__":
-    get_data()
+    df = get_data()
+    print(df["payout_ratio"])

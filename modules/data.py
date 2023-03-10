@@ -29,7 +29,7 @@ BS_columns = [
 CF_columns = [
     "Operating Cash Flow",
     "Investing cash flow",
-    "Equity Repurchase (Common, Net)",
+    "Issuance/Purchase of Shares",
     "Dividends Paid (Total)",
     "Financing cash flow",
     "Stock Based Compensation",
@@ -108,6 +108,12 @@ def get_data():
     except KeyError:
         df["payout_ratio"] = 0
     df["payout_ratio"] = df["payout_ratio"].round(2)
+
+    # represent compensation as negative event
+    df["Stock_Based_Compensation"] = df["Stock_Based_Compensation"] * -1
+
+    # represent repurchase as positive and issuance as negative
+    df["Issuance/Purchase_of_Shares"] = df["Issuance/Purchase_of_Shares"] * -1
 
     return df
 

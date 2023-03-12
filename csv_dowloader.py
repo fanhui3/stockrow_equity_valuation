@@ -1,9 +1,9 @@
-from stockrow_scraper_api import get_stockrow_data
-from file_mover import format_copy_file
+from modules import stockrow_scraper_api
+from modules import file_mover
 import time
 
 ticker = "pins"
 
-get_stockrow_data(ticker)
+stockrow_scraper_api.get_stockrow_data(ticker)
 time.sleep(3)
-format_copy_file()
+file_mover.format_copy_file()

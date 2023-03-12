@@ -1,5 +1,5 @@
 download folder location: 
-C:\Users\NAPS0707\Downloads\
+C:\Users\FAN_HUI\Downloads
 
 destination folder: 
-C:\Users\NAPS0707\Desktop\Projects\stockrow_equity_valuation\data
+C:\Users\FAN_HUI\Dropbox\pythonProject\stockrow_equity_valuation\data

@@ -1,5 +1,0 @@
-download folder location: 
-C:\Users\FAN_HUI\Downloads
-
-destination folder: 
-C:\Users\FAN_HUI\Dropbox\pythonProject\stockrow_equity_valuation\data

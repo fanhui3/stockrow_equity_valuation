@@ -1,5 +1,6 @@
 import math
 import pandas as pd
+import os
 
 IS_columns = [
     "year",
@@ -49,6 +50,8 @@ Metrics_columns = [
     "Free Cash Flow",
     "Book value per Share",
 ]
+# get the file path of one folder up
+file_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def prepare_frame(frame):
@@ -63,25 +66,25 @@ def prepare_frame(frame):
 
 def get_data():
     # read file
-    IS = pd.read_excel("./data/income.xlsx", engine="openpyxl").T
-    BS = pd.read_excel("./data/balance_sheet.xlsx", engine="openpyxl").T
-    CF = pd.read_excel("./data/cash_flow.xlsx", engine="openpyxl").T
-    Metrics = pd.read_excel("./data/metrics.xlsx", engine="openpyxl").T
+    IS = pd.read_excel(f"{file_path}/data/income.xlsx", engine="openpyxl").T
+    BS = pd.read_excel(f"{file_path}/data/balance_sheet.xlsx", engine="openpyxl").T
+    CF = pd.read_excel(f"{file_path}/data/cash_flow.xlsx", engine="openpyxl").T
+    METRICS = pd.read_excel(f"{file_path}/data/metrics.xlsx", engine="openpyxl").T
 
     # clean headers, set index and year
     IS = prepare_frame(IS)
     BS = prepare_frame(BS)
     CF = prepare_frame(CF)
-    Metrics = prepare_frame(Metrics)
+    METRICS = prepare_frame(METRICS)
 
     # retain relevant columns
     IS = IS[IS.columns.intersection(IS_columns)]
     BS = BS[BS.columns.intersection(BS_columns)]
     CF = CF[CF.columns.intersection(CF_columns)]
-    Metrics = Metrics[Metrics.columns.intersection(Metrics_columns)]
+    METRICS = METRICS[METRICS.columns.intersection(Metrics_columns)]
 
     # combine frames
-    df = pd.concat([IS, BS, CF, Metrics], axis="columns")
+    df = pd.concat([IS, BS, CF, METRICS], axis="columns")
 
     # fill na with zero
     df = df.fillna(0)

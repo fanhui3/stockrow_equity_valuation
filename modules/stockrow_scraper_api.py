@@ -1,5 +1,9 @@
 import webbrowser
 import time
+import os
+
+# get the file path of one folder up
+file_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 APIS = [
     "https://stockrow.com/api/companies/{}/financials.xlsx?dimension=A&section=Income%20Statement&sort=desc",
@@ -31,7 +35,8 @@ def get_stockrow_data(stock):
     Args:
         stock (str): the stocks you want
     """
-    brower_path = open("browser_location.txt", "r").readline()
+
+    brower_path = open(f"{file_path}/browser_location.txt", "r").readline()
     for api in APIS:
         go_to_site(api, brower_path, stock)
         time.sleep(1)

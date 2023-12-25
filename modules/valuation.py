@@ -71,6 +71,28 @@ def get_min_yoy_growth(history):
 
     return min_growth_rate
 
+def growth_history_report(OCF:list = None, net_income: list = None,FCF:list = None, dividends:list = None):
+    valuation = ["OCF", "net_income", "FCF", "dividends"]
+    histories = {}
+    for val in valuation:
+        if val == "OCF":
+            histories[val] = OCF if OCF else None
+        elif val == "net_income":
+            histories[val] = net_income if net_income else None
+        elif val == "FCF":
+            histories[val] = FCF if FCF else None
+        elif val == "dividends":
+            histories[val] = dividends if dividends else None
+
+    for key, history in histories.items():
+        try:
+            print(f"history: {key}")
+            print(f"Average growth rate: {(get_avg_yoy_growth(history)-1)*100:.2f}%")
+            print(f"CAGR growth rate: {(get_cagr_growth(history)-1)*100:.2f}%")
+            print("\n")
+        except ZeroDivisionError:
+            pass
+
 
 def get_future_values(history, average_growth_rate, average_growth_rate_cap=1.15):
     """get list of future values via the growth rates function ingests a list of past values,

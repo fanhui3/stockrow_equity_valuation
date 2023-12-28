@@ -4,3 +4,4 @@ data
 # browser_location.txt
 modules/__pycache__/
 # download_and_end_folders.txt
+dataframe.pkl

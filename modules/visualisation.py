@@ -7,6 +7,7 @@ plt.style.use("ggplot")
 
 
 def visualise_profitability(frame):
+    frame = frame.sort_values(by="year", ascending=True)
     axis = list(frame["year"])
     axis = sorted(axis)
 
@@ -131,6 +132,7 @@ def visualise_profitability(frame):
 
 
 def visualise_financial_health(frame):
+    frame = frame.sort_values(by="year", ascending=True)
     axis = list(frame["year"])
     axis = sorted(axis)
 

@@ -1,6 +1,9 @@
 import math
 import pandas as pd
 import os
+import numpy as np
+
+invalid_data = ["-", "—"]
 
 IS_columns = [
     "year",
@@ -55,21 +58,29 @@ file_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def prepare_frame(frame):
-    # make first column header
+    # set first row as header
     frame.columns = frame.iloc[0]
-    frame = frame.iloc[1:]
-    # check date column to year
+    frame = frame[1:]
+
+    # get the year columns
     frame = frame.rename_axis("year").reset_index()
-    frame["year"] = frame["year"].dt.year
+    # # current date format is Sep'14, replace ' and month before with "20"
+    frame["year"] = frame["year"].apply(lambda x: "20" + x.split("'")[1])
     return frame
 
 
 def get_data():
     # read file
-    IS = pd.read_excel(f"{file_path}/data/income.xlsx", engine="openpyxl").T
-    BS = pd.read_excel(f"{file_path}/data/balance_sheet.xlsx", engine="openpyxl").T
-    CF = pd.read_excel(f"{file_path}/data/cash_flow.xlsx", engine="openpyxl").T
-    METRICS = pd.read_excel(f"{file_path}/data/metrics.xlsx", engine="openpyxl").T
+    IS = pd.read_excel(
+        f"{file_path}/data/full_data.xlsx", sheet_name="Income Statement, A"
+    ).T
+    BS = pd.read_excel(
+        f"{file_path}/data/full_data.xlsx", sheet_name="Balance Sheet, A"
+    ).T
+    CF = pd.read_excel(f"{file_path}/data/full_data.xlsx", sheet_name="Cash Flow, A").T
+    METRICS = pd.read_excel(
+        f"{file_path}/data/full_data.xlsx", sheet_name="Metrics Ratios, A"
+    ).T
 
     # clean headers, set index and year
     IS = prepare_frame(IS)
@@ -86,12 +97,27 @@ def get_data():
     # combine frames
     df = pd.concat([IS, BS, CF, METRICS], axis="columns")
 
-    # fill na with zero
+    # if cell contains invalid data, replace with NaN
+    for column in df.columns:
+        df[column] = df[column].apply(lambda x: np.nan if x in invalid_data else x)
     df = df.fillna(0)
 
     # name column names
     df.columns = df.columns.str.strip()
     df.columns = df.columns.str.replace(" ", "_")
+
+    # convert year column to int
+    df["year"] = df["year"].astype(int)
+
+    # convert all other columns to float
+    for col in df.columns[1:]:
+        df[col] = df[col].astype(float)
+
+    # sort df by year in descending order
+    df = df.sort_values(by="year", ascending=False)
+
+    # filter out the years with value 0 from merging different dataframes
+    df = df[df["year"] != 0]
 
     ### create needed columns
 
@@ -122,5 +148,6 @@ def get_data():
 
 
 if __name__ == "__main__":
-    df = get_data()
-    print(df["payout_ratio"])
+    breakpoint()
+    # df = get_data()
+    # print(df["payout_ratio"])

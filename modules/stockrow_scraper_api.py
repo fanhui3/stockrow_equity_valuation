@@ -6,11 +6,12 @@ import os
 file_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 APIS = [
-    "https://stockrow.com/api/companies/{}/financials.xlsx?dimension=A&section=Income%20Statement&sort=desc",
-    "https://stockrow.com/api/companies/{}/financials.xlsx?dimension=A&section=Balance%20Sheet&sort=desc",
-    "https://stockrow.com/api/companies/{}/financials.xlsx?dimension=A&section=Cash%20Flow&sort=desc",
-    "https://stockrow.com/api/companies/{}/financials.xlsx?dimension=A&section=Metrics&sort=desc",
-    "https://stockrow.com/api/companies/{}/financials.xlsx?dimension=A&section=Growth&sort=desc",
+    # "https://stockrow.com/api/companies/{}/financials.xlsx?dimension=A&section=Income%20Statement&sort=desc",
+    # "https://stockrow.com/api/companies/{}/financials.xlsx?dimension=A&section=Balance%20Sheet&sort=desc",
+    # "https://stockrow.com/api/companies/{}/financials.xlsx?dimension=A&section=Cash%20Flow&sort=desc",
+    # "https://stockrow.com/api/companies/{}/financials.xlsx?dimension=A&section=Metrics&sort=desc",
+    # "https://stockrow.com/api/companies/{}/financials.xlsx?dimension=A&section=Growth&sort=desc",
+    "https://stockrow.com/vector/exports/financials/{}?direction=desc"
 ]
 
 
@@ -35,7 +36,7 @@ def get_stockrow_data(stock):
     Args:
         stock (str): the stocks you want
     """
-
+    stock = stock.upper()
     brower_path = open(f"{file_path}/browser_location.txt", "r").readline()
     for api in APIS:
         go_to_site(api, brower_path, stock)
@@ -43,5 +44,5 @@ def get_stockrow_data(stock):
 
 
 if __name__ == "__main__":
-    ticker = "mmm"
+    ticker = "pins"
     get_stockrow_data(ticker)

@@ -24,22 +24,20 @@ def format_copy_file() -> None:
 
     financial_tables = []
     for file in os.listdir():
-        if "financials" in file:
+        if "financials_export" in file:
             financial_tables.append(file)
 
     # sort financial files and create mapped pair
     financial_tables = sorted(financial_tables)
-    mapped_title = ["balance_sheet", "cash_flow", "metrics", "growth", "income"]
+    mapped_title = "full_data"
 
     # rename downloaded files
-    count = 0
     for file in financial_tables:
         try:
-            os.rename(file, mapped_title[count] + ".xlsx")
+            os.rename(file, mapped_title + ".xlsx")
         except FileExistsError:
-            os.remove(mapped_title[count] + ".xlsx")
-            os.rename(file, mapped_title[count] + ".xlsx")
-        count += 1
+            os.remove(mapped_title + ".xlsx")
+            os.rename(file, mapped_title + ".xlsx")
 
     # copy all files over to destination folder
     for file in os.listdir():

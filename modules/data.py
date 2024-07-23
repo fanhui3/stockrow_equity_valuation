@@ -2,8 +2,10 @@ import math
 import pandas as pd
 import os
 import numpy as np
+import re
 
-invalid_data = ["-", "—"]
+invalid_data = ["-", "—", "‡"]
+invalid_pattern = f"^[{''.join(invalid_data)}]+$"
 
 IS_columns = [
     "year",
@@ -99,7 +101,11 @@ def get_data():
 
     # if cell contains invalid data, replace with NaN
     for column in df.columns:
-        df[column] = df[column].apply(lambda x: np.nan if x in invalid_data else x)
+        df[column] = df[column].apply(
+            lambda x: (
+                np.nan if isinstance(x, str) and re.fullmatch(invalid_pattern, x) else x
+            )
+        )
     df = df.fillna(0)
 
     # name column names

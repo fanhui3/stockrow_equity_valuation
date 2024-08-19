@@ -2,6 +2,9 @@ env
 logic.txt
 data
 # browser_location.txt
-modules/__pycache__/
+modules/__pycache__/*
+__pycache__
+
 # download_and_end_folders.txt
 dataframe.pkl
+modules/__pycache__/*

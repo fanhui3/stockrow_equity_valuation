@@ -71,7 +71,10 @@ def get_min_yoy_growth(history):
 
     return min_growth_rate
 
-def growth_history_report(OCF:list = None, net_income: list = None,FCF:list = None, dividends:list = None):
+
+def growth_history_report(
+    OCF: list = None, net_income: list = None, FCF: list = None, dividends: list = None
+):
     valuation = ["OCF", "net_income", "FCF", "dividends"]
     histories = {}
     for val in valuation:
@@ -94,7 +97,9 @@ def growth_history_report(OCF:list = None, net_income: list = None,FCF:list = No
             pass
 
 
-def get_future_values(history, average_growth_rate, average_growth_rate_cap=1.15):
+def get_future_values(
+    history, average_growth_rate, average_growth_rate_cap=1.15, years_to_project=10
+):
     """get list of future values via the growth rates function ingests a list of past values,
     average growth rate, and capped average growth rate function returns a list of 10 future value
 
@@ -109,7 +114,7 @@ def get_future_values(history, average_growth_rate, average_growth_rate_cap=1.15
     """
     future_value = []
     start_value = history[0]
-    for i in range(1, 11):
+    for i in range(1, years_to_project + 1):
         # for year 1 - 3, grow by average growth rate
         if i <= 3:
             value = start_value * average_growth_rate
@@ -147,7 +152,7 @@ def get_present_values_per_share(future_value, wacc=1.1, no_of_shares=100000000)
 
 
 def get_ave_yoy_growth_DCF_value(
-    history, cap_growth=1.15, wacc=1.1, no_of_shares=100000000
+    history, cap_growth=1.15, wacc=1.1, no_of_shares=100000000, years_to_project=10
 ):
     """stringing together the past functions to get the final present value using the ave growth
     method
@@ -174,7 +179,7 @@ def get_ave_yoy_growth_DCF_value(
 
     # get next 10 years of future value
     future_value = get_future_values(
-        history, average_growth_rate, average_growth_rate_cap
+        history, average_growth_rate, average_growth_rate_cap, years_to_project
     )
 
     # bring each future value back to present and get per share value
@@ -184,7 +189,7 @@ def get_ave_yoy_growth_DCF_value(
 
 
 def get_cagr_growth_DCF_value(
-    history, cap_growth=1.15, wacc=1.1, no_of_shares=100000000
+    history, cap_growth=1.15, wacc=1.1, no_of_shares=100000000, years_to_project=10
 ):
     """stringing together the past functions to get the final present value using the CAGR growth
     method
@@ -211,7 +216,7 @@ def get_cagr_growth_DCF_value(
 
     # get next 10 years of future value
     future_value = get_future_values(
-        history, average_growth_rate, average_growth_rate_cap
+        history, average_growth_rate, average_growth_rate_cap, years_to_project
     )
 
     # bring each future value back to present and get per share value
